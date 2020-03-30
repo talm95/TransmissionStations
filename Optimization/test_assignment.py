@@ -1,6 +1,6 @@
 from unittest import TestCase
 from assignment import find_best_assignments
-from assignment import assign_clients_to_stations
+from assignment import assign_matrix
 from assignment import compute_assignment_total_expense
 import numpy as np
 
@@ -11,7 +11,7 @@ class TestAssignment(TestCase):
                                    [1, 2, 3, 4],
                                    [1, 2, 3, 4],
                                    [1, 2, 3, 4]])
-        assignments = find_best_assignments(expense_matrix)
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 0)
 
     def test_does_has_optimal_assignment(self):
@@ -19,7 +19,7 @@ class TestAssignment(TestCase):
                                    [1, 0, 3, 4],
                                    [1, 2, 0, 4],
                                    [1, 2, 3, 0]])
-        assignments = find_best_assignments(expense_matrix)
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 4)
 
     def test_complicated_doesnt_have_optimal_assignment(self):
@@ -27,7 +27,7 @@ class TestAssignment(TestCase):
                                    [1, 1, 3, 4],
                                    [0, 2, 1, 0],
                                    [1, 2, 3, 0]])
-        assignments = find_best_assignments(expense_matrix)
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 3)
 
     def test_complicated_has_optimal_assignment(self):
@@ -35,7 +35,7 @@ class TestAssignment(TestCase):
                                    [1, 0, 0, 4],
                                    [0, 0, 1, 0],
                                    [1, 2, 3, 0]])
-        assignments = find_best_assignments(expense_matrix)
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 4)
 
     def test_big_matrix_has_optimal_assignment(self):
@@ -47,7 +47,7 @@ class TestAssignment(TestCase):
                                    [1, 2, 3, 4, 0, 1, 1, 0],
                                    [0, 0, 1, 0, 1, 1, 0, 1],
                                    [1, 2, 3, 0, 1, 0, 1, 1]])
-        assignments = find_best_assignments(expense_matrix)
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 8)
 
     def test_big_matrix_doesnt_have_optimal_assignment(self):
@@ -59,8 +59,7 @@ class TestAssignment(TestCase):
                                    [1, 2, 3, 4, 0, 1, 1, 0],
                                    [0, 0, 1, 0, 1, 1, 2, 1],
                                    [1, 2, 3, 0, 1, 0, 1, 1]])
-        assignments = find_best_assignments(expense_matrix)
-        print assignments
+        assignments, _, _ = find_best_assignments(expense_matrix)
         self.assertEquals(len(assignments), 7)
 
     def test_assignment_1(self):
@@ -68,7 +67,7 @@ class TestAssignment(TestCase):
                                    [1, 2, 3, 4],
                                    [1, 2, 3, 4],
                                    [1, 2, 3, 4]])
-        assignments = assign_clients_to_stations(expense_matrix)
+        assignments = assign_matrix(expense_matrix)
         total_expense = compute_assignment_total_expense(expense_matrix, assignments)
         self.assertEquals(total_expense, 10)
 
@@ -77,7 +76,7 @@ class TestAssignment(TestCase):
                                    [2, 1, 2, 2],
                                    [2, 2, 1, 2],
                                    [2, 2, 2, 1]])
-        assignments = assign_clients_to_stations(expense_matrix)
+        assignments = assign_matrix(expense_matrix)
         total_expense = compute_assignment_total_expense(expense_matrix, assignments)
         self.assertEquals(total_expense, 4)
 
@@ -86,7 +85,7 @@ class TestAssignment(TestCase):
                                    [7, 9, 2, 6],
                                    [6, 4, 5, 7],
                                    [5, 7, 7, 8]])
-        assignments = assign_clients_to_stations(expense_matrix)
+        assignments = assign_matrix(expense_matrix)
         total_expense = compute_assignment_total_expense(expense_matrix, assignments)
         self.assertEquals(total_expense, 17)
 
@@ -111,7 +110,7 @@ class TestAssignment(TestCase):
                                     0., 0., 0., 0.],
                                    [2.95464454, 2.95464454, 3.45413517, 3.45413517, 2.06763753, 2.06763753,
                                     0., 0., 0., 0.]])
-        assignments = assign_clients_to_stations(expense_matrix)
+        assignments = assign_matrix(expense_matrix)
         total_expense = compute_assignment_total_expense(expense_matrix, assignments)
         self.assertTrue(no_more_than_one_assignment_per_row_and_column(assignments))
         self.assertEquals(total_expense, 16.38974787)

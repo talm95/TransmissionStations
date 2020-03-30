@@ -1,4 +1,5 @@
 import random
+import math
 
 
 def randomize_stations(map_size, number_of_stations):
@@ -36,3 +37,16 @@ def get_clients_pos(clients):
     for client in clients:
         clients_pos.append(client.get("client_pos"))
     return clients_pos
+
+
+def assign_clients_to_stations(assignments, clients, number_of_stations, max_clients_per_station):
+    for assignment in assignments:
+        if math.floor(assignment[1]/max_clients_per_station) <= number_of_stations-1:
+            clients[assignment[0]]["station_assigned"] = int(math.floor(assignment[1]/max_clients_per_station))
+        else:
+            clients[assignment[0]]["station_assigned"] = -1
+
+
+def filter_clients_by_assigned_station(clients, assigned_station):
+    filtered_clients = filter(lambda client: client.get("station_assigned") == assigned_station, clients)
+    return filtered_clients

@@ -1,7 +1,8 @@
 import numpy as np
 
 
-def assign_clients_to_stations(expense_matrix):
+def assign_matrix(expense_matrix):
+
     altered_expense_matrix = np.array(expense_matrix[::])
 
     subtract_rows_minimum(altered_expense_matrix)
@@ -40,10 +41,8 @@ def find_best_assignments(altered_expense_matrix):
                                                                   lined_columns, axis=1):
                 break
             
-            new_assignments = find_rows_with_only_one_zero(np.transpose(altered_expense_matrix), lined_columns,
-                                                           lined_rows)
-            for assignment in new_assignments:
-                assignments.extend([assignment[::-1]])
+            new_assignments = find_columns_with_only_one_zero(altered_expense_matrix, lined_rows, lined_columns)
+            assignments.extend(new_assignments)
             found_no_new_assignments = 0 if len(new_assignments) > 0 else found_no_new_assignments + 1
 
         if 0 in np.delete(np.delete(altered_expense_matrix, lined_rows, axis=0), lined_columns, axis=1):
@@ -75,6 +74,14 @@ def find_rows_with_only_one_zero(altered_expense_matrix, lined_rows, lined_colum
     return assignments
 
 
+def find_columns_with_only_one_zero(altered_expense_matrix, lined_rows, lined_columns):
+    reversed_assignments = find_rows_with_only_one_zero(np.transpose(altered_expense_matrix), lined_columns, lined_rows)
+    assignments = []
+    for reversed_assignment in reversed_assignments:
+        assignments.extend([reversed_assignment[::-1]])
+    return assignments
+
+
 def solve_multiple_solutions_situation(altered_expense_matrix, lined_rows, lined_columns):
     new_assignment = find_first_zero_in_uncrossed_lines(altered_expense_matrix, lined_rows, lined_columns)
     temporarily_lined_row = new_assignment[0]
@@ -87,10 +94,7 @@ def solve_multiple_solutions_situation(altered_expense_matrix, lined_rows, lined
         new_assignments.extend([new_assignment])
         return new_assignments
     else:
-        new_reversed_assignments = find_rows_with_only_one_zero(np.transpose(altered_expense_matrix), lined_columns,
-                                                                lined_rows)
-        for new_reversed_assignment in new_reversed_assignments:
-            new_assignments.extend([new_reversed_assignment[::-1]])
+        new_assignments = find_columns_with_only_one_zero(altered_expense_matrix, lined_rows, lined_columns)
         new_assignments.extend([new_assignment])
         return new_assignments
 

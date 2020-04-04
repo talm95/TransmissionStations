@@ -4,10 +4,10 @@ from Utils.imaging import draw_map_of_assignments
 from hungarian_algorithm import get_assignments
 from hungarian_algorithm import compute_total_expense
 
-map_size = 1000
-number_of_stations = 50
+map_size = 100
+number_of_stations = 10
 number_of_clients = 220
-max_clients_per_station = 4
+max_clients_per_station = 20
 
 stations = randomize_stations(map_size, number_of_stations)
 clients = randomize_clients(map_size, number_of_clients)

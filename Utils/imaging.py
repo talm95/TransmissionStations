@@ -24,8 +24,8 @@ def draw_map_of_assignments(map_size, stations, clients):
                                      label='Third priority clients')
 
     ax_before_assignment.set_title('Stations and clients before assignment')
-    ax_before_assignment.set_xlim(-map_size/5, map_size + map_size/5)
-    ax_before_assignment.set_ylim(-map_size/5, map_size + map_size/5)
+    ax_before_assignment.set_xlim(-map_size/10, map_size + map_size/2)
+    ax_before_assignment.set_ylim(-map_size/10, map_size + map_size/10)
     ax_before_assignment.legend()
 
     ax_after_assignment = plt.subplot(1, 2, 2)
@@ -47,8 +47,8 @@ def draw_map_of_assignments(map_size, stations, clients):
 
     ax_after_assignment.set_label('unassigned_clients')
     ax_after_assignment.set_title('Stations and clients after assignment')
-    ax_after_assignment.set_xlim(-map_size/5, map_size + map_size / 5)
-    ax_after_assignment.set_ylim(-map_size/5, map_size + map_size / 5)
+    ax_after_assignment.set_xlim(-map_size/10, map_size + map_size / 2)
+    ax_after_assignment.set_ylim(-map_size/10, map_size + map_size / 10)
     ax_after_assignment.legend()
 
     plt.show()
